@@ -1,0 +1,59 @@
+<div class="card border-0 shadow-sm p-4" style="max-width: 920px;">
+  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+  <form th:action="@{/actas/guardar}" method="post" class="row g-3">
+    <input type="hidden" name="codigoActaBrigada" th:value="${acta.codigoActaBrigada}"/>
+
+    <div class="col-md-4">
+      <label class="form-label">Fecha Acta *</label>
+      <input class="form-control" type="date" name="fechaActaBrigada"
+             th:value="${acta.fechaActaBrigada}" required>
+      <div class="form-text">No puede ser futura.</div>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Estado *</label>
+      <select class="form-select" name="estadoActaBrigada" required>
+        <option value="" disabled th:selected="${acta.estadoActaBrigada == null}">Seleccione...</option>
+        <option value="0" th:selected="${acta.estadoActaBrigada == 0}">0</option>
+        <option value="1" th:selected="${acta.estadoActaBrigada == 1}">1</option>
+        <option value="2" th:selected="${acta.estadoActaBrigada == 2}">2</option>
+      </select>
+      <div class="form-text">Ajustamos los textos si tus estados significan otra cosa.</div>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Establecimiento *</label>
+      <input class="form-control" type="number" name="fkCodEstablecimiento"
+             th:value="${acta.fkCodEstablecimiento}"
+             min="1" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Brigada *</label>
+      <select class="form-select" name="fkTipoBrigada" required>
+        <option value="" disabled selected>Seleccione...</option>
+        <option th:each="b : ${brigadas}"
+                th:value="${b.codigoBrigada}"
+                th:text="${b.descripcionBrigada}"
+                th:selected="${acta.tipoBrigada != null and acta.tipoBrigada.codigoBrigada == b.codigoBrigada}">
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Link Archivo *</label>
+      <input class="form-control" name="linkArchivoActaBrigada"
+             th:value="${acta.linkArchivoActaBrigada}"
+             placeholder="https://..."
+             pattern="^(https?://).+"
+             maxlength="255"
+             required>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-dark">Guardar</button>
+      <a class="btn btn-outline-secondary" th:href="@{/actas}">Cancelar</a>
+    </div>
+  </form>
+</div>

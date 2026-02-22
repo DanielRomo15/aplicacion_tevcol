@@ -1,0 +1,38 @@
+<div class="card border-0 shadow-sm p-4" style="max-width: 820px;">
+  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+  <form th:action="@{/brigadas/guardar}" method="post" class="row g-3">
+    <input type="hidden" name="codigoBrigada" th:value="${tipo.codigoBrigada}"/>
+
+    <div class="col-md-6">
+      <label class="form-label">Descripción *</label>
+      <input class="form-control" name="descripcionBrigada"
+             th:value="${tipo.descripcionBrigada}"
+             minlength="3" maxlength="120" required>
+      <div class="form-text">Mínimo 3 caracteres.</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Establecimiento *</label>
+      <input class="form-control" type="number" name="fkCodEstablecimiento"
+             th:value="${tipo.fkCodEstablecimiento}"
+             min="1" required>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Link *</label>
+      <input class="form-control" name="linkBrigada"
+             th:value="${tipo.linkBrigada}"
+             placeholder="https://..."
+             pattern="^(https?://).+"
+             maxlength="255"
+             required>
+      <div class="form-text">Debe iniciar con http:// o https://</div>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-dark">Guardar</button>
+      <a class="btn btn-outline-secondary" th:href="@{/brigadas}">Cancelar</a>
+    </div>
+  </form>
+</div>

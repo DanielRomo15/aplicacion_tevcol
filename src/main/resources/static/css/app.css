@@ -1,0 +1,17 @@
+.bg-soft { background: #f6f7fb; }
+
+.sidebar {
+  background: #ffffff;
+  min-height: calc(100vh - 56px);
+  border-right: 1px solid #eef0f4;
+}
+
+.card { border-radius: 16px; }
+
+.list-group-item {
+  border: none;
+  border-radius: 12px !important;
+  margin-bottom: 6px;
+}
+
+.list-group-item:hover { background: #f3f4f6; }
