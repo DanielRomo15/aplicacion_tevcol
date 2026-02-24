@@ -16,15 +16,17 @@ public class DashboardController {
 
     @GetMapping({"/", "/dashboard"})
     public String dashboard(Model model) {
+
         long total = actaRepo.count();
-        long estado0 = actaRepo.countByEstadoActaBrigada(0);
-        long estado1 = actaRepo.countByEstadoActaBrigada(1);
-        long estado2 = actaRepo.countByEstadoActaBrigada(2);
+
+        // Ajusta los estados según los valores reales de tu BD
+        long activos = actaRepo.countByEstadoActaBrigada("ACTIVO");
+        long inactivos = actaRepo.countByEstadoActaBrigada("INACTIVO");
 
         model.addAttribute("totalActas", total);
-        model.addAttribute("estado0", estado0);
-        model.addAttribute("estado1", estado1);
-        model.addAttribute("estado2", estado2);
+        model.addAttribute("activos", activos);
+        model.addAttribute("inactivos", inactivos);
+
         return "dashboard/index";
     }
 }

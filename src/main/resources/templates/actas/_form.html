@@ -1,59 +1,72 @@
-<div class="card border-0 shadow-sm p-4" style="max-width: 920px;">
-  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<div class="mb-4">
+  <h1 class="h3 fw-bold mb-1">Formulario Acta</h1>
+  <p class="text-muted mb-0">Interfaz clara, moderna y sin saturación.</p>
+</div>
 
-  <form th:action="@{/actas/guardar}" method="post" class="row g-3">
-    <input type="hidden" name="codigoActaBrigada" th:value="${acta.codigoActaBrigada}"/>
+<div th:if="${error}" class="alert alert-danger border-0 shadow-sm">
+  <span th:text="${error}">Error</span>
+</div>
 
-    <div class="col-md-4">
-      <label class="form-label">Fecha Acta *</label>
-      <input class="form-control" type="date" name="fechaActaBrigada"
-             th:value="${acta.fechaActaBrigada}" required>
-      <div class="form-text">No puede ser futura.</div>
-    </div>
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-4 p-lg-5">
 
-    <div class="col-md-4">
-      <label class="form-label">Estado *</label>
-      <select class="form-select" name="estadoActaBrigada" required>
-        <option value="" disabled th:selected="${acta.estadoActaBrigada == null}">Seleccione...</option>
-        <option value="0" th:selected="${acta.estadoActaBrigada == 0}">0</option>
-        <option value="1" th:selected="${acta.estadoActaBrigada == 1}">1</option>
-        <option value="2" th:selected="${acta.estadoActaBrigada == 2}">2</option>
-      </select>
-      <div class="form-text">Ajustamos los textos si tus estados significan otra cosa.</div>
-    </div>
+    <form th:action="@{/actas/guardar}" th:object="${acta}" method="post" class="row g-4">
 
-    <div class="col-md-4">
-      <label class="form-label">Establecimiento *</label>
-      <input class="form-control" type="number" name="fkCodEstablecimiento"
-             th:value="${acta.fkCodEstablecimiento}"
-             min="1" required>
-    </div>
+      <!-- (opcional) Si editas, este hidden ayuda a mantener el ID -->
+      <input type="hidden" th:field="*{codigoActaBrigada}"/>
 
-    <div class="col-md-6">
-      <label class="form-label">Brigada *</label>
-      <select class="form-select" name="fkTipoBrigada" required>
-        <option value="" disabled selected>Seleccione...</option>
-        <option th:each="b : ${brigadas}"
-                th:value="${b.codigoBrigada}"
-                th:text="${b.descripcionBrigada}"
-                th:selected="${acta.tipoBrigada != null and acta.tipoBrigada.codigoBrigada == b.codigoBrigada}">
-        </option>
-      </select>
-    </div>
+      <div class="col-12 col-lg-4">
+        <label class="form-label fw-semibold">Fecha Acta <span class="text-danger">*</span></label>
+        <input type="date" class="form-control form-control-lg" th:field="*{fechaActaBrigada}" required>
+        <div class="form-text">No puede ser futura.</div>
+      </div>
 
-    <div class="col-md-6">
-      <label class="form-label">Link Archivo *</label>
-      <input class="form-control" name="linkArchivoActaBrigada"
-             th:value="${acta.linkArchivoActaBrigada}"
-             placeholder="https://..."
-             pattern="^(https?://).+"
-             maxlength="255"
-             required>
-    </div>
+      <div class="col-12 col-lg-4">
+        <label class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
 
-    <div class="col-12 d-flex gap-2">
-      <button class="btn btn-dark">Guardar</button>
-      <a class="btn btn-outline-secondary" th:href="@{/actas}">Cancelar</a>
-    </div>
-  </form>
+        <!-- Si tu BD guarda "ACTIVO/INACTIVO", esto evita el error de conversión -->
+        <select class="form-select form-select-lg" th:field="*{estadoActaBrigada}" required>
+          <option value="" disabled selected>Seleccione...</option>
+          <option value="ACTIVO">ACTIVO</option>
+          <option value="INACTIVO">INACTIVO</option>
+        </select>
+
+        <div class="form-text">Use ACTIVO o INACTIVO.</div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <label class="form-label fw-semibold">Establecimiento <span class="text-danger">*</span></label>
+        <input type="number" min="1" class="form-control form-control-lg" th:field="*{fkCodEstablecimiento}" required>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <label class="form-label fw-semibold">Brigada <span class="text-danger">*</span></label>
+
+        <select class="form-select form-select-lg" name="fkTipoBrigada" required>
+          <option value="" disabled selected>Seleccione...</option>
+
+          <!-- ✅ AQUÍ ESTABA TU ERROR: antes decía b.codigoTipoBrigada -->
+          <!-- Si tu ID NO se llama "codigoBrigada", cámbialo por el nombre real -->
+          <option th:each="b : ${brigadas}"
+                  th:value="${b.codigoBrigada}"
+                  th:text="${b.descripcionBrigada}">
+            Brigada
+          </option>
+        </select>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <label class="form-label fw-semibold">Link Archivo <span class="text-danger">*</span></label>
+        <input type="url" class="form-control form-control-lg"
+               placeholder="https://..."
+               th:field="*{linkArchivoActaBrigada}" required>
+      </div>
+
+      <div class="col-12 d-flex gap-2 mt-2">
+        <button type="submit" class="btn btn-dark btn-lg px-4 rounded-pill">Guardar</button>
+        <a th:href="@{/actas}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">Cancelar</a>
+      </div>
+
+    </form>
+  </div>
 </div>

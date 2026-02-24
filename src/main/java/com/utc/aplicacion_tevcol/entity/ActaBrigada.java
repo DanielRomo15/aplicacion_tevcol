@@ -16,10 +16,12 @@ public class ActaBrigada {
     @Column(name = "fecha_acta_brigada", nullable = false)
     private LocalDate fechaActaBrigada;
 
-    @Column(name = "estado_acta_brigada", nullable = false)
-    private Integer estadoActaBrigada; // 0,1,2 (si usas otros valores, lo ajustamos)
+    // OJO: en la BD tienes valores tipo "ACTIVO"
+    @Column(name = "estado_acta_brigada", nullable = false, length = 30)
+    private String estadoActaBrigada;
 
-    @Column(name = "link_archivo_acta_brigada", nullable = false)
+    // En tu tabla se ve NULL, así que NO debe ser nullable=false
+    @Column(name = "link_archivo_acta_brigada")
     private String linkArchivoActaBrigada;
 
     @Column(name = "fecha_creado_acta_brigada")
@@ -29,10 +31,10 @@ public class ActaBrigada {
     private LocalDateTime fechaEditadoActaBrigada;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_tipo_brigada", nullable = false)
+    @JoinColumn(name = "fk_tipo_brigada")
     private TipoBrigada tipoBrigada;
 
-    @Column(name = "fk_cod_establecimiento", nullable = false)
+    @Column(name = "fk_cod_establecimiento")
     private Long fkCodEstablecimiento;
 
     @PrePersist
@@ -52,8 +54,8 @@ public class ActaBrigada {
     public LocalDate getFechaActaBrigada() { return fechaActaBrigada; }
     public void setFechaActaBrigada(LocalDate fechaActaBrigada) { this.fechaActaBrigada = fechaActaBrigada; }
 
-    public Integer getEstadoActaBrigada() { return estadoActaBrigada; }
-    public void setEstadoActaBrigada(Integer estadoActaBrigada) { this.estadoActaBrigada = estadoActaBrigada; }
+    public String getEstadoActaBrigada() { return estadoActaBrigada; }
+    public void setEstadoActaBrigada(String estadoActaBrigada) { this.estadoActaBrigada = estadoActaBrigada; }
 
     public String getLinkArchivoActaBrigada() { return linkArchivoActaBrigada; }
     public void setLinkArchivoActaBrigada(String linkArchivoActaBrigada) { this.linkArchivoActaBrigada = linkArchivoActaBrigada; }

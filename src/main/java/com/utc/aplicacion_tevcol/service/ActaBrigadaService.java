@@ -27,15 +27,29 @@ public class ActaBrigadaService {
     }
 
     public ActaBrigada guardar(ActaBrigada a, Long fkTipoBrigada) {
-        // Validaciones negocio
+
         if (a.getFechaActaBrigada() == null) throw new IllegalArgumentException("Fecha obligatoria");
         if (a.getFechaActaBrigada().isAfter(LocalDate.now())) throw new IllegalArgumentException("No puede ser futura");
 
-        if (a.getEstadoActaBrigada() == null || a.getEstadoActaBrigada() < 0 || a.getEstadoActaBrigada() > 2)
-            throw new IllegalArgumentException("Estado inválido (0-2)");
+        if (a.getEstadoActaBrigada() == null || a.getEstadoActaBrigada().isBlank())
+            throw new IllegalArgumentException("Estado obligatorio");
 
-        if (a.getLinkArchivoActaBrigada() == null || !a.getLinkArchivoActaBrigada().startsWith("http"))
-            throw new IllegalArgumentException("Link inválido (http/https)");
+        // Ajusta aquí si manejas más estados
+        String estado = a.getEstadoActaBrigada().trim().toUpperCase();
+        if (!estado.equals("ACTIVO") && !estado.equals("INACTIVO"))
+            throw new IllegalArgumentException("Estado inválido (use ACTIVO o INACTIVO)");
+
+        a.setEstadoActaBrigada(estado);
+
+        // link puede ser null según tu tabla
+        if (a.getLinkArchivoActaBrigada() != null && !a.getLinkArchivoActaBrigada().isBlank()) {
+            String link = a.getLinkArchivoActaBrigada().trim();
+            if (!link.startsWith("http"))
+                throw new IllegalArgumentException("Link inválido (http/https)");
+            a.setLinkArchivoActaBrigada(link);
+        } else {
+            a.setLinkArchivoActaBrigada(null);
+        }
 
         if (a.getFkCodEstablecimiento() == null || a.getFkCodEstablecimiento() <= 0)
             throw new IllegalArgumentException("Establecimiento inválido");
@@ -43,13 +57,11 @@ public class ActaBrigadaService {
         TipoBrigada tipo = tipoRepo.findById(fkTipoBrigada)
                 .orElseThrow(() -> new IllegalArgumentException("Brigada inválida"));
 
-        // regla: mismo establecimiento
         if (tipo.getFkCodEstablecimiento() != null && !tipo.getFkCodEstablecimiento().equals(a.getFkCodEstablecimiento())) {
             throw new IllegalArgumentException("El establecimiento del acta debe coincidir con el de la brigada");
         }
 
         a.setTipoBrigada(tipo);
-        a.setLinkArchivoActaBrigada(a.getLinkArchivoActaBrigada().trim());
 
         return actaRepo.save(a);
     }

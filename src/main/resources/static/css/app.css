@@ -1,17 +1,356 @@
-.bg-soft { background: #f6f7fb; }
+/* ====== TEVCOL - Dark Premium (1 SOLO ARCHIVO) ====== */
 
-.sidebar {
-  background: #ffffff;
-  min-height: calc(100vh - 56px);
-  border-right: 1px solid #eef0f4;
+:root{
+  --bg0:#070A0F;
+  --bg1:#0B1020;
+
+  --panel: rgba(255,255,255,.06);
+  --panel2: rgba(255,255,255,.08);
+  --stroke: rgba(255,255,255,.12);
+
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.66);
+
+  --brand: #FFC107;
+  --brand2:#FFD54F;
+
+  --radius: 18px;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --shadow2: 0 10px 25px rgba(0,0,0,.35);
 }
 
-.card { border-radius: 16px; }
-
-.list-group-item {
-  border: none;
-  border-radius: 12px !important;
-  margin-bottom: 6px;
+/* Fondo general oscuro tipo “web corporativa” */
+body{
+  background:
+    radial-gradient(1000px 600px at 10% 10%, rgba(255,193,7,.15), transparent 55%),
+    radial-gradient(900px 520px at 90% 0%, rgba(13,110,253,.14), transparent 55%),
+    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 60%, #05070C 100%) !important;
+  color: var(--text) !important;
+  min-height: 100vh;
 }
 
-.list-group-item:hover { background: #f3f4f6; }
+/* Navbar elegante */
+.navbar{
+  background: rgba(0,0,0,.35) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--stroke) !important;
+  box-shadow: var(--shadow2);
+}
+
+.navbar .navbar-brand{
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--text) !important;
+}
+
+.navbar .navbar-brand::before{
+  content:"";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, var(--brand2), var(--brand));
+  box-shadow: 0 0 0 3px rgba(255,193,7,.14);
+  display:inline-block;
+  margin-right: .6rem;
+}
+
+/* Sidebar tipo panel */
+.sidebar{
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)) !important;
+  border: 1px solid var(--stroke) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--shadow);
+}
+
+/* Texto en sidebar */
+.sidebar .small,
+.sidebar .text-muted{
+  color: var(--muted) !important;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Menú */
+.list-group{
+  background: transparent !important;
+}
+
+.list-group-item{
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: var(--text) !important;
+  border-radius: 14px !important;
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  transition: all .15s ease-in-out;
+}
+
+.list-group-item:hover{
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  transform: translateX(3px);
+}
+
+/* Área principal */
+main{
+  background: rgba(255,255,255,.03) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decoración diagonal tipo la imagen */
+main::before{
+  content:"";
+  position:absolute;
+  inset:-40px -60px auto auto;
+  width: 380px;
+  height: 280px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,193,7,.0) 0px,
+      rgba(255,193,7,.0) 10px,
+      rgba(255,193,7,.10) 10px,
+      rgba(255,193,7,.10) 14px
+    );
+  opacity: .55;
+  transform: rotate(6deg);
+  pointer-events:none;
+}
+
+main::after{
+  content:"";
+  position:absolute;
+  inset:auto auto -120px -120px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,193,7,.18), transparent 60%);
+  pointer-events:none;
+}
+
+/* Cards */
+.card{
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow2);
+}
+
+/* Tablas */
+.table{
+  color: var(--text) !important;
+  background: transparent !important;
+}
+
+.table thead th{
+  color: var(--muted) !important;
+  background: rgba(255,255,255,.05) !important;
+  border-bottom-color: rgba(255,255,255,.08) !important;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  font-size: .78rem;
+}
+
+.table tbody td{
+  border-top-color: rgba(255,255,255,.07) !important;
+  color: var(--text) !important;
+}
+
+.table-hover tbody tr:hover{
+  background: rgba(255,255,255,.05) !important;
+}
+
+/* Inputs */
+.form-control, .form-select{
+  background: rgba(0,0,0,.20) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  color: var(--text) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+.form-control::placeholder{
+  color: rgba(255,255,255,.45) !important;
+}
+
+.form-control:focus, .form-select:focus{
+  border-color: rgba(255,193,7,.45) !important;
+  box-shadow: 0 0 0 .20rem rgba(255,193,7,.12) !important;
+}
+
+/* Botones */
+.btn{
+  border-radius: 999px !important;
+  font-weight: 600;
+}
+
+.btn-dark{
+  background: rgba(255,255,255,.12) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  color: var(--text) !important;
+  box-shadow: var(--shadow2);
+}
+
+.btn-dark:hover{
+  background: rgba(255,255,255,.16) !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-light{
+  border-color: rgba(255,255,255,.32) !important;
+  color: var(--text) !important;
+}
+
+.btn-outline-light:hover{
+  background: rgba(255,255,255,.10) !important;
+  border-color: rgba(255,255,255,.45) !important;
+  transform: translateY(-1px);
+}
+
+/* Textos Bootstrap */
+.text-muted, .small{
+  color: var(--muted) !important;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar{
+  width: 10px;
+}
+.sidebar::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.12);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0);
+  background-clip: padding-box;
+}
+.sidebar::-webkit-scrollbar-thumb:hover{
+  background: rgba(255,255,255,.18);
+  background-clip: padding-box;
+}
+
+
+
+
+
+/* ===== Fix: textos legibles en Dark UI (sin dañar tablas claras) ===== */
+
+/* Labels y textos de formularios */
+label, .form-label, .col-form-label{
+  color: var(--text) !important;
+}
+
+/* Ayudas / descripciones debajo de inputs */
+.form-text, small, .small{
+  color: var(--muted) !important;
+}
+
+/* texto-muted en dark */
+.text-muted{
+  color: var(--muted) !important;
+}
+
+/* Cards en general: texto claro */
+.card{
+  color: var(--text);
+}
+.card *{
+  color: inherit;
+}
+
+/* Mantener los grises */
+.card .text-muted,
+.card small,
+.card .small,
+.card .form-text{
+  color: var(--muted) !important;
+}
+
+/* ✅ EXCEPCIÓN: Tablas (normalmente fondo claro). Volvemos a texto oscuro */
+.table,
+.table *{
+  color: #111 !important;
+}
+
+/* Encabezado de tabla (si usas thead oscuro) */
+.table thead,
+.table thead *{
+  color: #111 !important;
+}
+
+/* Mensajes de validación */
+.invalid-feedback, .text-danger{
+  color: #ff6b6b !important;
+}
+.valid-feedback, .text-success{
+  color: #51cf66 !important;
+}
+
+/* Iconos dentro de inputs */
+.input-group-text{
+  background: rgba(0,0,0,.20) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  color: var(--text) !important;
+}
+
+
+
+
+
+/* ===== FIX FINAL: forzar texto visible en tablas ===== */
+.table,
+.table td,
+.table th,
+.table tbody td,
+.table tbody th{
+  color: #111 !important;
+}
+
+/* Si hay spans/links dentro de la tabla, que también se vean */
+.table td * ,
+.table th *{
+  color: inherit !important;	
+}
+
+/* Por si algún estilo te dejó el texto “transparente” o con opacidad */
+.table td,
+.table th{
+  opacity: 1 !important;
+  -webkit-text-fill-color: #111 !important;
+}
+
+
+
+
+/* ===== Fix: que el gradiente no tape la tabla ===== */
+.table{
+  position: relative;
+  z-index: 5;
+}
+
+.table thead{
+  position: relative;
+  z-index: 6;
+}
+
+
+
+/* ===== Fix: header de tabla sin franja negra/transparente ===== */
+.table thead,
+.table thead th {
+  background: rgba(255, 255, 255, 0.98) !important; /* sólido (casi blanco) */
+  color: #111 !important;                           /* texto visible */
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Por si tu tabla usa .table-light */
+.table .table-light,
+.table .table-light th {
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: #111 !important;
+}
