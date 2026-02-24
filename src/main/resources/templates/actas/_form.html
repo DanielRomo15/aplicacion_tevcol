@@ -12,7 +12,7 @@
 
     <form th:action="@{/actas/guardar}" th:object="${acta}" method="post" class="row g-4">
 
-      <!-- (opcional) Si editas, este hidden ayuda a mantener el ID -->
+     
       <input type="hidden" th:field="*{codigoActaBrigada}"/>
 
       <div class="col-12 col-lg-4">
@@ -24,7 +24,7 @@
       <div class="col-12 col-lg-4">
         <label class="form-label fw-semibold">Estado <span class="text-danger">*</span></label>
 
-        <!-- Si tu BD guarda "ACTIVO/INACTIVO", esto evita el error de conversión -->
+       
         <select class="form-select form-select-lg" th:field="*{estadoActaBrigada}" required>
           <option value="" disabled selected>Seleccione...</option>
           <option value="ACTIVO">ACTIVO</option>
@@ -45,8 +45,6 @@
         <select class="form-select form-select-lg" name="fkTipoBrigada" required>
           <option value="" disabled selected>Seleccione...</option>
 
-          <!-- ✅ AQUÍ ESTABA TU ERROR: antes decía b.codigoTipoBrigada -->
-          <!-- Si tu ID NO se llama "codigoBrigada", cámbialo por el nombre real -->
           <option th:each="b : ${brigadas}"
                   th:value="${b.codigoBrigada}"
                   th:text="${b.descripcionBrigada}">

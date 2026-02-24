@@ -34,14 +34,14 @@ public class ActaBrigadaService {
         if (a.getEstadoActaBrigada() == null || a.getEstadoActaBrigada().isBlank())
             throw new IllegalArgumentException("Estado obligatorio");
 
-        // Ajusta aquí si manejas más estados
+        
         String estado = a.getEstadoActaBrigada().trim().toUpperCase();
         if (!estado.equals("ACTIVO") && !estado.equals("INACTIVO"))
             throw new IllegalArgumentException("Estado inválido (use ACTIVO o INACTIVO)");
 
         a.setEstadoActaBrigada(estado);
 
-        // link puede ser null según tu tabla
+        
         if (a.getLinkArchivoActaBrigada() != null && !a.getLinkArchivoActaBrigada().isBlank()) {
             String link = a.getLinkArchivoActaBrigada().trim();
             if (!link.startsWith("http"))

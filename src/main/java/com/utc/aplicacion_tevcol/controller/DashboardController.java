@@ -19,7 +19,7 @@ public class DashboardController {
 
         long total = actaRepo.count();
 
-        // Ajusta los estados según los valores reales de tu BD
+        
         long activos = actaRepo.countByEstadoActaBrigada("ACTIVO");
         long inactivos = actaRepo.countByEstadoActaBrigada("INACTIVO");
 

@@ -22,7 +22,7 @@ public class TipoBrigadaService {
     }
 
     public TipoBrigada guardar(TipoBrigada t) {
-        // Validaciones de negocio mínimas
+        
         if (t.getDescripcionBrigada() == null || t.getDescripcionBrigada().trim().length() < 3)
             throw new IllegalArgumentException("Descripción inválida (mínimo 3 caracteres)");
 

@@ -16,11 +16,11 @@ public class ActaBrigada {
     @Column(name = "fecha_acta_brigada", nullable = false)
     private LocalDate fechaActaBrigada;
 
-    // OJO: en la BD tienes valores tipo "ACTIVO"
+    
     @Column(name = "estado_acta_brigada", nullable = false, length = 30)
     private String estadoActaBrigada;
 
-    // En tu tabla se ve NULL, así que NO debe ser nullable=false
+    
     @Column(name = "link_archivo_acta_brigada")
     private String linkArchivoActaBrigada;
 
