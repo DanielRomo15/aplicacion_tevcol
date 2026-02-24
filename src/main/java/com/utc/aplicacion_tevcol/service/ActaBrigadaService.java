@@ -20,51 +20,69 @@ public class ActaBrigadaService {
         this.tipoRepo = tipoRepo;
     }
 
-    public List<ActaBrigada> listar() { return actaRepo.findAll(); }
+    public List<ActaBrigada> listar() {
+        return actaRepo.findAll();
+    }
 
     public ActaBrigada obtener(Long id) {
-        return actaRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Acta no existe"));
+        return actaRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Acta no existe"));
     }
 
     public ActaBrigada guardar(ActaBrigada a, Long fkTipoBrigada) {
 
-        if (a.getFechaActaBrigada() == null) throw new IllegalArgumentException("Fecha obligatoria");
-        if (a.getFechaActaBrigada().isAfter(LocalDate.now())) throw new IllegalArgumentException("No puede ser futura");
+        // Fecha
+        if (a.getFechaActaBrigada() == null) {
+            throw new IllegalArgumentException("Fecha obligatoria");
+        }
+        if (a.getFechaActaBrigada().isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("No puede ser futura");
+        }
 
-        if (a.getEstadoActaBrigada() == null || a.getEstadoActaBrigada().isBlank())
+        // Estado (ACTIVO/INACTIVO)
+        if (a.getEstadoActaBrigada() == null || a.getEstadoActaBrigada().isBlank()) {
             throw new IllegalArgumentException("Estado obligatorio");
+        }
 
-        
         String estado = a.getEstadoActaBrigada().trim().toUpperCase();
-        if (!estado.equals("ACTIVO") && !estado.equals("INACTIVO"))
+        if (!estado.equals("ACTIVO") && !estado.equals("INACTIVO")) {
             throw new IllegalArgumentException("Estado inválido (use ACTIVO o INACTIVO)");
-
+        }
         a.setEstadoActaBrigada(estado);
 
-        
+        // Link (opcional)
         if (a.getLinkArchivoActaBrigada() != null && !a.getLinkArchivoActaBrigada().isBlank()) {
             String link = a.getLinkArchivoActaBrigada().trim();
-            if (!link.startsWith("http"))
+            if (!link.startsWith("http")) {
                 throw new IllegalArgumentException("Link inválido (http/https)");
+            }
             a.setLinkArchivoActaBrigada(link);
         } else {
             a.setLinkArchivoActaBrigada(null);
         }
 
-        if (a.getFkCodEstablecimiento() == null || a.getFkCodEstablecimiento() <= 0)
+        // Establecimiento
+        if (a.getFkCodEstablecimiento() == null || a.getFkCodEstablecimiento() <= 0) {
             throw new IllegalArgumentException("Establecimiento inválido");
+        }
 
+        // Brigada (obligatoria)
         TipoBrigada tipo = tipoRepo.findById(fkTipoBrigada)
                 .orElseThrow(() -> new IllegalArgumentException("Brigada inválida"));
 
-        if (tipo.getFkCodEstablecimiento() != null && !tipo.getFkCodEstablecimiento().equals(a.getFkCodEstablecimiento())) {
-            throw new IllegalArgumentException("El establecimiento del acta debe coincidir con el de la brigada");
-        }
+        // ✅ VALIDACIÓN ELIMINADA:
+        // Ya NO se valida que el establecimiento del acta coincida con el de la brigada
+        // if (tipo.getFkCodEstablecimiento() != null
+        //         && !tipo.getFkCodEstablecimiento().equals(a.getFkCodEstablecimiento())) {
+        //     throw new IllegalArgumentException("El establecimiento del acta debe coincidir con el de la brigada");
+        // }
 
         a.setTipoBrigada(tipo);
 
         return actaRepo.save(a);
     }
 
-    public void eliminar(Long id) { actaRepo.deleteById(id); }
+    public void eliminar(Long id) {
+        actaRepo.deleteById(id);
+    }
 }
